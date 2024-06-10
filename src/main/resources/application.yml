@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: bankingservice
+  cache:
+    type: simple
+
+  datasource:
+    url: jdbc:h2:file:./src/main/resources/data/dot_ai;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
+    username: dot_ai
+    password:
+    driver-class-name: org.h2.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 600000
+      connection-timeout: 30000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+server:
+  servlet:
+    context-path: /api/v1
+  port: 8080
+
+transfer:
+  fee:
+    rate: "0.005"
+    max: "100"
+
+  commission:
+    rate: "0.2"
+
+transaction:
+  cron:
+    commission: "0 1 0 * * *"
+    summary: "0 5 0 * * *"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
